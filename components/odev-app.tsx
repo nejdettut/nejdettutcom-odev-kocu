@@ -61,8 +61,33 @@ const SUBJECTS: { v: Subject; l: string }[] = [
   { v: "diger", l: "Diğer" },
 ];
 
-const EXAMPLE =
-  "Bir sayının 3 katı ile 12'nin toplamı 30'a eşittir. Sayı kaçtır?";
+const EXAMPLES: Array<{
+  label: string;
+  question: string;
+  grade: Grade;
+  subject: Subject;
+}> = [
+  {
+    label: "Matematik · ortaokul",
+    grade: "ortaokul-5-6",
+    subject: "matematik",
+    question: "Bir sayının 3 katı ile 12'nin toplamı 30'a eşittir. Sayı kaçtır?",
+  },
+  {
+    label: "Fen · lise",
+    grade: "lise",
+    subject: "fen",
+    question:
+      "Bir cismin kütlesi 2 kg, yüksekliği 10 m. Serbest düşme sırasında yere çarpma hızını nasıl bulurum?",
+  },
+  {
+    label: "Türkçe · ortaokul",
+    grade: "ortaokul-7-8",
+    subject: "turkce",
+    question:
+      "Bir metindeki yan anlam ile mecaz anlam arasındaki farkı nasıl anlarım? Örnekle açıklayamıyorum.",
+  },
+];
 
 const BTN_PRIMARY =
   "inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-navy/90 disabled:opacity-50 dark:bg-brand-turquoise dark:text-brand-navy";
@@ -179,13 +204,20 @@ export function OdevApp() {
                   </>
                 )}
               </button>
-              <button
-                type="button"
-                onClick={() => setQuestion(EXAMPLE)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white/70 px-4 py-2 text-sm font-medium hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/60"
-              >
-                Örnek
-              </button>
+              {EXAMPLES.map((ex) => (
+                <button
+                  key={ex.label}
+                  type="button"
+                  onClick={() => {
+                    setQuestion(ex.question);
+                    setGrade(ex.grade);
+                    setSubject(ex.subject);
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white/70 px-4 py-2 text-sm font-medium hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900/60"
+                >
+                  {ex.label}
+                </button>
+              ))}
             </div>
             <p className={cn("text-[11px]", MUTED)}>
               Saatte 25 soru sınırı. Koç cevabı vermez — yolu açar.
